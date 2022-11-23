@@ -66,4 +66,28 @@ router.patch("/get-job", async (req, res) => {
   }
 });
 
+router.patch("/update-job", async (req, res) => {
+  const { jobId, status } = req.body;
+
+  if (!jobId || !status) {
+    return res.sendStatus(StatusCodes.BAD_REQUEST);
+  }
+
+  try {
+    switch (status) {
+      case JOB_STATUSES.COMPLETED:
+        await boss.complete(jobId);
+        break;
+      case JOB_STATUSES.FAILED:
+        await boss.fail(jobId);
+        break;
+    }
+
+    res.send(formatResponse(true, { jobId }));
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+});
+
 module.exports = router;
