@@ -21,7 +21,18 @@ const addUrl = (id, url, status = JOB_STATUSES.CREATED) => {
     .catch((err) => console.error("Error executing query", err.stack));
 };
 
+const updateJobStatus = (id, status) => {
+  return pool
+    .query(
+      "UPDATE public.processed_urls SET status = $1, updated_at = NOW() WHERE id = $2",
+      [status, id]
+    )
+    .then((res) => res.rowCount === 1)
+    .catch((err) => console.error("Error executing query", err.stack));
+};
+
 module.exports = {
   isUrlExists,
   addUrl,
+  updateJobStatus,
 };
