@@ -4,7 +4,7 @@ const { Router } = require("express");
 const boss = require("../boss");
 const { CRAWL_JOB_QUEUE_NAME } = require("../constants");
 const { getProducts } = require("../database");
-const { formatProduct } = require("../utils");
+const { formatResponse, formatProduct } = require("../utils");
 
 const PRODUCT_EVENT = "PRODUCT_EVENT";
 const JOB_EVENT = "JOB_EVENT";

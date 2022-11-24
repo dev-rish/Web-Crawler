@@ -26,6 +26,16 @@ const formatJob = (job) => {
   };
 };
 
+const formatProduct = (product) => {
+  const { image_url, created_on, ...rest } = product;
+
+  return {
+    imageUrl: image_url,
+    createdOn: created_on,
+    ...rest,
+  };
+};
+
 const isValidURL = (url) => {
   try {
     return new URL(url).host.replace("www.", "") === ACCEPTED_DOMAIN;
@@ -37,5 +47,6 @@ const isValidURL = (url) => {
 module.exports = {
   formatResponse,
   formatJob,
+  formatProduct,
   isValidURL,
 };
