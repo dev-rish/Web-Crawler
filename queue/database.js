@@ -1,8 +1,18 @@
 const { isEmpty } = require("lodash");
 const { Pool } = require("pg");
-const { JOB_STATUSES } = require("./constants");
+const { JOB_STATUSES, CRAWL_JOB_QUEUE_NAME } = require("./constants");
 
 const pool = new Pool({ connectionString: process.env.POSTGRES_URI });
+
+const getAllJobs = (status) => {
+  return pool
+    .query("SELECT * FROM pgboss.job WHERE name = $1 AND state = $2", [
+      CRAWL_JOB_QUEUE_NAME,
+      status,
+    ])
+    .then((res) => res.rows)
+    .catch((err) => console.error("Error executing query", err.stack));
+};
 
 const isUrlExists = (url) => {
   return pool
@@ -32,6 +42,7 @@ const updateJobStatus = (id, status) => {
 };
 
 module.exports = {
+  getAllJobs,
   isUrlExists,
   addUrl,
   updateJobStatus,

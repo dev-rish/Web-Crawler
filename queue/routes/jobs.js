@@ -4,7 +4,7 @@ const { StatusCodes } = require("http-status-codes");
 
 const { formatResponse, formatJob, isValidURL } = require("../utils");
 const boss = require("../boss");
-const { addUrl, isUrlExists, updateJobStatus } = require("../database");
+const { addUrl, isUrlExists, updateJobStatus, getAllJobs } = require("../database");
 const {
   CRAWL_JOB_QUEUE_NAME,
   RETRY_LIMIT,
@@ -84,6 +84,25 @@ router.patch("/update-job", async (req, res) => {
     }
 
     res.send(formatResponse(true, { jobId }));
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+});
+
+router.get("/get-jobs", async (req, res) => {
+  const { status } = req.query;
+
+  if (!Object.values(JOB_STATUSES).includes(status)) {
+    return res.sendStatus(StatusCodes.BAD_REQUEST);
+  }
+
+  try {
+    const jobs = await getAllJobs(status);
+    if (isEmpty(jobs)) {
+      return res.send(formatResponse(true, []));
+    }
+    res.send(formatResponse(true, jobs.map(formatJob)));
   } catch (err) {
     console.log(err);
     res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
