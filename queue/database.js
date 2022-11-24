@@ -41,9 +41,17 @@ const updateJobStatus = (id, status) => {
     .catch((err) => console.error("Error executing query", err.stack));
 };
 
+const getProducts = () => {
+  return pool
+    .query("SELECT * FROM public.products")
+    .then((res) => res.rows)
+    .catch((err) => console.error("Error executing query", err.stack));
+};
+
 module.exports = {
   getAllJobs,
   isUrlExists,
   addUrl,
   updateJobStatus,
+  getProducts,
 };
