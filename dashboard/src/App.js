@@ -5,12 +5,13 @@ import { Container, Row, Col } from "reactstrap";
 import Products from "./Products";
 import JobAnalytics from "./JobAnalytics";
 
-const API_BASE_URL = "http://localhost:4000";
+// const API_BASE_URL = "http://localhost:4000";
+const API_BASE_URL = "";
 
 const PRODUCT_EVENT = "PRODUCT_EVENT";
 const JOB_EVENT = "JOB_EVENT";
 
-const socket = io(API_BASE_URL);
+const socket = io();
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -30,9 +31,7 @@ function App() {
       setJobData(data);
     });
 
-    fetch(`${API_BASE_URL}/products`, {
-      // headers: { "Access-Control-Allow-Origin": "*" },
-    })
+    fetch(`${API_BASE_URL}/products`)
       .then((res) => res.json())
       .then(({ data }) => {
         setProducts(data);
