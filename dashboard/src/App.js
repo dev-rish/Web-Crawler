@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { Container, Row, Col } from "reactstrap";
 
+import Products from "./Products";
 import JobAnalytics from "./JobAnalytics";
 
 const API_BASE_URL = "http://localhost:4000";
 
+const PRODUCT_EVENT = "PRODUCT_EVENT";
 const JOB_EVENT = "JOB_EVENT";
 
 const socket = io(API_BASE_URL);
@@ -13,6 +15,7 @@ const socket = io(API_BASE_URL);
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [jobData, setJobData] = useState();
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -27,10 +30,22 @@ function App() {
       setJobData(data);
     });
 
+    fetch(`${API_BASE_URL}/products`, {
+      // headers: { "Access-Control-Allow-Origin": "*" },
+    })
+      .then((res) => res.json())
+      .then(({ data }) => {
+        setProducts(data);
+        socket.on(PRODUCT_EVENT, (data) => {
+          setProducts((products) => [...products, data]);
+        });
+      });
+
     return () => {
       socket.off("connect");
       socket.off("disconnect");
       socket.off(JOB_EVENT);
+      socket.off(PRODUCT_EVENT);
     };
   }, []);
 
@@ -39,10 +54,16 @@ function App() {
   }
 
   return (
-    <Container className="mx-2">
+    <Container className="m-auto">
       <Row>
         <Col className="d-flex justify-content-center">
           <JobAnalytics jobData={jobData} />
+        </Col>
+      </Row>
+
+      <Row className="my-5">
+        <Col className="d-flex justify-content-center">
+          <Products products={products} />
         </Col>
       </Row>
     </Container>
