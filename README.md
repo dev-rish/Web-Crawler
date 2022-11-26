@@ -91,9 +91,9 @@ Example: ```
 ## Installation
 The project was tested on Node 18 & Postgres 14.
 
-#### Setup env file
+#### 1. Setup env file
 Rename `.env.example` to `.env` and update the contents of the file accordingly for `queue` & `crawler`.
-#### Install dependencies
+#### 2. Install dependencies
 Run the following command in `queue` followed by `crawler`
 ```
 npm ci
@@ -104,4 +104,11 @@ For production environments...
 ```
 npm ci
 npm run start
+```
+
+### Docker
+If you are using Docker, simply update the Postgres DB credentials in `docker-compose.yml` file (steps above not required) and run
+
+```
+docker-compose up -d
 ```
