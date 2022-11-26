@@ -1,0 +1,19 @@
+version: "3"
+services:
+  queue:
+    build:
+      dockerfile: Dockerfile
+      context: ./queue
+    environment:
+      - POSTGRES_URI=postgres://postgres:postgres@host.docker.internal:5432/postgres
+      - PORT=4000
+    ports:
+      - "4000:4000"
+  crawler:
+    build:
+      dockerfile: Dockerfile
+      context: ./crawler
+    environment:
+      - POSTGRES_URI=postgres://postgres:postgres@host.docker.internal:5432/postgres
+      - API_URL=http://queue:4000
+    scale: 3
