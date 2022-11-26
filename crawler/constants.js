@@ -1,5 +1,3 @@
-const BASE_URL = "http://localhost:4000";
-
 const IMAGE_SELECTOR =
   "img.ProductPreviewSliderstyle__Image-sc-1t0tp5v-2.grpdtf";
 const PRODUCT_BRAND_SELECTOR =
@@ -17,7 +15,6 @@ const JOB_STATUSES = {
 };
 
 module.exports = {
-  BASE_URL,
   IMAGE_SELECTOR,
   PRODUCT_BRAND_SELECTOR,
   PRODUCT_NAME_SELECTOR,

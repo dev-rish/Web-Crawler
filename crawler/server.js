@@ -8,7 +8,6 @@ const {
   PRODUCT_BRAND_SELECTOR,
   PRODUCT_NAME_SELECTOR,
   JOB_STATUSES,
-  BASE_URL,
 } = require("./constants");
 const { addProduct } = require("./database");
 const { fetchData } = require("./utils");
@@ -19,7 +18,7 @@ cron.schedule("*/5 * * * * *", async () => {
   try {
     const { data: job } = await fetchData({
       method: "PATCH",
-      url: `${BASE_URL}/get-job`,
+      url: `${process.env.API_URL}/get-job`,
     });
 
     if (isEmpty(job)) return;
@@ -74,7 +73,7 @@ async function updateJobStatus(jobId, status) {
 
   return fetchData({
     method: "PATCH",
-    url: `${BASE_URL}/update-job`,
+    url: `${process.env.API_URL}/update-job`,
     data: { jobId, status },
   });
 }
