@@ -1,4 +1,6 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 const path = require("path");
 const express = require("express");
@@ -34,6 +36,6 @@ app.use(routes);
 
   const port = process.env.PORT;
   httpServer.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+    console.log(`Server listening on port ${port} with ${process.env.NODE_ENV} environment`);
   });
 })();
