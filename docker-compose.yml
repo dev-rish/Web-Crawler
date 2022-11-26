@@ -1,6 +1,8 @@
 version: "3"
 services:
   queue:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     build:
       dockerfile: Dockerfile
       context: ./queue
@@ -10,6 +12,8 @@ services:
     ports:
       - "4000:4000"
   crawler:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     build:
       dockerfile: Dockerfile
       context: ./crawler
