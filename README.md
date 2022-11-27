@@ -12,7 +12,6 @@ Monitors the Job Queue & does the actual job aka crawling of the product page af
 ## APIs
 ### Create Job
 Creates & adds the job to the Job Queue which will later be picked by the Crawler.
-`retryLimit` & `retryDelay` (in seconds) are optional.
 
 ```
   GET /create-job
