@@ -2,11 +2,11 @@
 ## About
 This can crawl any product page from www.flaconi.de and extract the title, brand, image of that product.
 It has 3 parts to it:
-- Job Queue
+#### Job Queue
 Responsible for handling multiple jobs aka product URLs to crawl. Ensures that no 2 crawlers get the same job!
-- Dashboard
+#### Dashboard
 This is where the status of the Queue & the results from the product URLs crawled are shown
-- Crawler
+#### Crawler
 Monitors the Job Queue & does the actual job aka crawling of the product page after getting details from the Job Queue.
 
 ## APIs
