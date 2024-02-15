@@ -6,7 +6,7 @@ const fetchData = (config) => {
     .catch((error) => {
       if (error.response) {
         console.log(
-          `Request failed: URL-${config.url} | Status-${response.status}`
+          `Request failed: URL-${config.url} | Status-${error.response.status}`
         );
       } else if (error.request) {
         console.log(`Unable to reach ${config.url}`);
